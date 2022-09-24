@@ -46,6 +46,5 @@ class ShipType private constructor(val name: String, val squares:Int, val fleetQ
             ShipType("Submarine",1,2)
         )
 
-
     }
 }

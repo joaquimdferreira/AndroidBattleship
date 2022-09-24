@@ -1,5 +1,5 @@
 package isel.pt.androidbattleship.domain.board.coord
-
+//um comentário
 fun String.toPositionOrNull(): Position? {
     val pair = parseString(this) ?: return null
 

@@ -3,7 +3,7 @@ package isel.pt.androidbattleship
 import isel.pt.androidbattleship.domain.board.coord.*
 import org.junit.Assert
 import org.junit.Test
-
+//1234567
 class ColumnTest {
     @Test
     fun `number of columns`() {

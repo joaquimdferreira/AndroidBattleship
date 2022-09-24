@@ -17,7 +17,7 @@ class ShipTypeTest {
         val sut = "2".toShipTypeOrNull() // One ship has 2 squares ?
         assertNotNull(sut) // Yes
         assertEquals(2,sut!!.squares) // Confirme number of squares
-        assertEquals("Submarine",sut.name) // Its name is "Submarine"
+        assertEquals("Destroyer",sut.name) // Its name is "Submarine"
         assertSame("2".toShipType(),sut)
     }
     @Test

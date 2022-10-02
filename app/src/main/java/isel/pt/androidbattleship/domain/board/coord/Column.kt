@@ -1,6 +1,8 @@
 package isel.pt.androidbattleship.domain.board.coord
 
-const val COLUMN_DIM = 10
+import isel.pt.androidbattleship.domain.board.BOARD_SIZE
+
+const val COLUMN_DIM = BOARD_SIZE
 
 fun Char.toColumnOrNull(): Column? = Column.getColumn(letter = this.uppercaseChar(), columnList = Column.values)
 fun Int.indexToColumnOrNull(): Column? = Column.getColumn(ordinal = this, columnList = Column.values)

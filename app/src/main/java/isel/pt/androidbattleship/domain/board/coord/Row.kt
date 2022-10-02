@@ -1,6 +1,8 @@
 package isel.pt.androidbattleship.domain.board.coord
 
-const val ROW_DIM = 10
+import isel.pt.androidbattleship.domain.board.BOARD_SIZE
+
+const val ROW_DIM = BOARD_SIZE
 
 fun Int.toRowOrNull(): Row? = Row.getRow(number = this, rowList = Row.values)
 fun Int.indexToRowOrNull(): Row? = Row.getRow(ordinal = this, rowList = Row.values)

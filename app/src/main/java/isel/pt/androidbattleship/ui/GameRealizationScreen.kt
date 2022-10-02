@@ -22,7 +22,8 @@ fun GameRealizationScreen() {
             modifier = Modifier.fillMaxSize(),
             color = SteelBlue
         ) {
-            Column(verticalArrangement = Arrangement.Center){
+            Column(verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxSize()){
                 CreateGrid(text = "enemy grid", 1.0F, NotBlue)
                 CreateGrid(text = "your grid", 2.0F, OceanBlue)
             }
@@ -45,7 +46,8 @@ val SteelBlue = Color(0xff51DF18)
 fun CreateGrid(text: String, weight: Float, color: Color) {
     Box(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .padding(40.dp),
         contentAlignment = Alignment.Center
     ) {
         Text(text = text )
@@ -53,7 +55,7 @@ fun CreateGrid(text: String, weight: Float, color: Color) {
 
     Box(
         modifier = Modifier
-            .padding(50.dp)
+            .padding(horizontal = 50.dp)
             .fillMaxWidth(),
         contentAlignment = Alignment.Center
     ) {

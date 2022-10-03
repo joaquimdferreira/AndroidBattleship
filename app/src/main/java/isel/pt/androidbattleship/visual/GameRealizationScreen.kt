@@ -7,8 +7,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import isel.pt.androidbattleship.ui.theme.AndroidBattleshipTheme
 import isel.pt.androidbattleship.R
 @Composable
@@ -37,10 +41,10 @@ fun CreateGrid(text: String, color: Int) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(40.dp),
+            .padding(5.dp),
         contentAlignment = Alignment.Center
     ) {
-        Text(text = text )
+        Text(text = text, fontSize = 30.sp, fontFamily = FontFamily.Serif, fontWeight = FontWeight.Bold )
     }
 
     Box(

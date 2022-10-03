@@ -1,5 +1,6 @@
 package isel.pt.androidbattleship.visual
 
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -10,15 +11,16 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.graphics.toColor
 import isel.pt.androidbattleship.ui.theme.AndroidBattleshipTheme
 import isel.pt.androidbattleship.R
+import isel.pt.androidbattleship.domain.board.BOARD_SIZE
+
 @Composable
 fun GameRealizationScreen() {
     AndroidBattleshipTheme {
-
         // A surface container using the 'background' color from the theme
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -26,8 +28,8 @@ fun GameRealizationScreen() {
         ) {
             Column(verticalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxSize()){
-                CreateGrid(text = "Enemy grid", R.color.red)
-                CreateGrid(text = "Your grid", R.color.ocean_blue)
+                CreateGrid(text = "Enemy fleet", R.color.red)
+                CreateGrid(text = "Your fleet", R.color.ocean_blue)
             }
 
 
@@ -65,8 +67,47 @@ fun CreateGrid(text: String, color: Int) {
     }
 }
 
+@Composable
+fun Square(isDarkSquare: Boolean) {
+    val purple = colorResource(id = R.color.purple_200)
+    val purple2 = colorResource(id = R.color.purple_500)
+    Canvas(modifier = Modifier.fillMaxSize(1f)) {
+        drawRect(color = if (isDarkSquare)  purple
+        else purple2)
+    }
+}
+
+
+@Composable
+fun Board() {
+    Box(
+        Modifier
+            .fillMaxSize()
+            .aspectRatio(1f)) {
+        Column {
+            for (rank in 0 until BOARD_SIZE) {
+                Row(modifier = Modifier.weight(1f)) {
+
+                    Square(
+                        rank%2 == 0/* other params */
+                    )
+
+                }
+
+            }
+        }
+    }
+}
+
+
 @Preview
 @Composable
-fun Grid() {
+fun BoardPreview() {
     GameRealizationScreen()
+}
+
+@Preview
+@Composable
+fun GridPreview() {
+    Board()
 }

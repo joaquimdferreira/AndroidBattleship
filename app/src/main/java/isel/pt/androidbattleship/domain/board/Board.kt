@@ -1,7 +1,6 @@
 package isel.pt.androidbattleship.domain.board
 
 import isel.pt.androidbattleship.domain.board.coord.Position
-import isel.pt.androidbattleship.domain.board.coord.toPositionOrNull
 import isel.pt.androidbattleship.domain.board.model.Player
 import isel.pt.androidbattleship.domain.board.model.ShipType
 
@@ -14,20 +13,28 @@ data class ShipPos(val ship: ShipType, val posList: List<Position>) {
     }
 }
 
+enum class Arrangement {Vertical, Horizontal}
+
 class Board(
     private val player: Player,
     private val moveList: List<Move> = mutableListOf(),
-    private val shipPosistions:  List<ShipPos> = mutableListOf()
+    private val positions: Map<String, Position> = Position.values,
+    private val shipPositions:  List<ShipPos> = mutableListOf()
 ) {
-    fun putShip(ship: ShipType, initPos: Position): Board {
-        return Board(player,moveList,shipPosistions)
+    fun putShip(ship: ShipType, initPos: Position, arrangement: Arrangement): Board {
+        //generate pos for ships
+        val posList = mutableListOf<Position>()
+        if(checkAvailability())
+
     }
 
-    fun play(playMaker: Player, position: String): Board {
+    private fun checkAvailability(size: Int, pos: Position): Boolean {
+
+    }
+
+    fun play(playMaker: Player, position: Position): Board {
         require(playMaker != player) {"This player cannot perform this action."}
-        val pos = position.toPositionOrNull()
-        require(pos != null) {"An invalid position has been selected."}
-        val move = Move(playMaker, pos)
+        val move = Move(playMaker, position)
         require(move !in moveList)
 
         //calculate move outcome -> ()

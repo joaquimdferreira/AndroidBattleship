@@ -6,9 +6,11 @@ import isel.pt.androidbattleship.domain.board.Board
 import isel.pt.androidbattleship.domain.board.model.Player
 
 class FinishedGame(
-    player1: Player, p1Board: Board,
-    player2: Player, p2Board: Board,
-    val winner: Player
+    private val p1: Player,private val p1Board: Board,
+    private val p2: Player,private val p2Board: Board,
+    val winner: Player,private val currTurn: Player = winner
     ): Game {
     override val gameState = GameState.Ended
+
+
 }

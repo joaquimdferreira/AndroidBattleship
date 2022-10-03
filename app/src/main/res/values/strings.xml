@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AndroidBattleship</string>
+    <string name="button_loading">Changing…</string>
 </resources>

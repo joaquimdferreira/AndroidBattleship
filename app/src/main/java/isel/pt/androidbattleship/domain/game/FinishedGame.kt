@@ -11,5 +11,4 @@ class FinishedGame(
     val winner: Player
     ): Game {
     override val gameState = GameState.Ended
-
 }

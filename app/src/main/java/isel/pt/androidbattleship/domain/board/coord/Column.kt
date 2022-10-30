@@ -4,49 +4,29 @@ import isel.pt.androidbattleship.domain.board.BOARD_SIZE
 
 const val COLUMN_DIM = BOARD_SIZE
 
-fun Char.toColumnOrNull(): Column? = Column.getColumn(letter = this.uppercaseChar(), columnList = Column.values)
-fun Int.indexToColumnOrNull(): Column? = Column.getColumn(ordinal = this, columnList = Column.values)
-fun Int.indexToColumn(): Column = Column.getColumn(ordinal = this, columnList = Column.values) ?: throw IndexOutOfBoundsException()
+fun Char.toColumnOrNull(): Column? = Column.getColumn(symbol = this)
+fun Int.indexToColumnOrNull(): Column? = Column.getColumn(index = this)
+fun Int.indexToColumn(): Column = this.indexToColumnOrNull() ?: throw IndexOutOfBoundsException()
 
-class Column(val letter: Char, val ordinal: Int){
+class Column private constructor(val symbol: Char, val index: Int){
     companion object{
-        val values:ArrayList<Column> = initColumns()
+        operator fun invoke(symbol: Char, index: Int? = null) = getColumn(symbol, index)
 
-        private fun initColumns() : ArrayList<Column> {
-            val columns = arrayListOf<Column>()
-            var columnLetter = 'A'
-            for( i in 0 until COLUMN_DIM){
-                val c = Column(columnLetter, i)
-                columns.add(c)
-                columnLetter = columnLetter.inc()
+        val values : ArrayList<Column> = initColumns()
+
+        private fun initColumns (): ArrayList<Column> {
+            val list = ArrayList<Column>(BOARD_SIZE)
+            var initS = 'a'
+            repeat(BOARD_SIZE) {
+                list.add(Column(initS, it))
+                initS = initS.inc()
             }
-            return columns
+            return list
         }
-
-        fun getColumn(letter: Char? = null, ordinal: Int? = null, columnList: ArrayList<Column>): Column? {
-            return if(letter != null) getColumnByLetter(letter, columnList)
-            else if(ordinal != null) getColumnByOrdinal(ordinal, columnList)
-            else null
+        fun getColumn(symbol: Char? = null, index: Int? = null): Column? {
+            return if (symbol != null) values.find { it.symbol == symbol }
+            else if (index != null) values.find { it.index == index }
+            else throw IllegalArgumentException()
         }
-
-        private fun getColumnByLetter(letter: Char, columnList: ArrayList<Column>): Column? {
-            var column: Column
-            for( i in columnList.indices){
-                column = columnList[i]
-                if(column.letter == letter)return column
-            }
-            return null
-        }
-
-        private fun getColumnByOrdinal(ordinal: Int, columnList: ArrayList<Column>): Column? {
-            var column: Column
-            for( i in columnList.indices){
-                column = columnList[i]
-                if(column.ordinal == ordinal)return column
-            }
-            return null
-        }
-
-
     }
 }

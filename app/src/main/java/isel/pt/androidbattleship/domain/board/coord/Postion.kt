@@ -1,65 +1,49 @@
 package isel.pt.androidbattleship.domain.board.coord
+
+import isel.pt.androidbattleship.domain.board.BOARD_SIZE
+
 fun String.toPositionOrNull(): Position? {
-    val pair = parseString(this) ?: return null
-
-    val letter: Char = pair.first
-    val number: Int = pair.second
-
-    val column = letter.toColumnOrNull()
-    val row = number.toRowOrNull()
-
-    return if(column == null || row == null) null
-    else Position.get(column = column, row = row)
+    val cordPair = parseString(this) ?: return null
+    val row = cordPair.first.toRowOrNull()
+    val column = cordPair.second.toColumnOrNull()
+    return Position.getPosition(row, column)
 }
 
-fun String.toPosition(): Position = this.toPositionOrNull() ?: throw IllegalStateException("No such Position found")
+fun String.toSquare(): Position = this.toPositionOrNull() ?: throw IllegalArgumentException()
 
-private fun parseString(string: String): Pair<Char, Int>?{
-    val letter: Char
-    val number: Int
-    when (string.length) {
-        3 -> {
-            letter = string.first()
-            number = string.takeLast(2).toInt()
-        }
-        2 -> {
-            letter = string.first()
-            number = string.last().code - '0'.code
-        }
-        else -> return null
-    }
-    return Pair(letter, number)
+private fun parseString(str: String): Pair<Int,Char>? {
+    if(str.isEmpty())return null
+    val second = str.last()
+    val first = str.dropLast(1).toIntOrNull() ?: return null
+    return Pair(first, second)
 }
 
 class Position(val column: Column, val row: Row){
-
-    override fun toString():String = "${column.letter}${row.number}"
-
     companion object {
+        operator fun invoke(rowIdx: Int, columnIdx: Int) =
+            getPosition(rowIdx.indexToRowOrNull(), columnIdx.indexToColumnOrNull())
 
-        val values = initPositions()
+        operator fun invoke(row: Row, column: Column) =
+            getPosition(row, column) ?: throw IllegalStateException("No such square exists in values")
 
-        private fun initPositions():Map<String, Position>{
-            val map=mutableMapOf<String, Position>()
-            val columns = Column.values
-            val rows = Row.values
-            for(i in columns.indices){
-                for(j in rows.indices){
-                    val pos= Position(columns[i],rows[j])
-                    map[pos.toString()] = pos
+        val values : ArrayList<Position> = initSquares()
+
+        private fun initSquares(): java.util.ArrayList<Position> {
+            val list = ArrayList<Position>(BOARD_SIZE * BOARD_SIZE)
+            repeat(BOARD_SIZE) { rIdx ->
+                repeat(BOARD_SIZE) { cIdx ->
+                    list.add(Position(rIdx.indexToRow(), cIdx.indexToColumn()))
                 }
             }
-            return map
+            return list
         }
 
-
-        operator fun get(indexColumn:Int, indexRow:Int): Position {
-            val column= indexColumn.indexToColumn()
-            val row= indexRow.indexToRow()
-            return values.getValue(Position(column,row).toString())
+        fun getPosition(row: Row?, column: Column?): Position? {
+            return values.find { it.row == row && it.column == column }
         }
+    }
 
-        operator fun get(column: Column, row: Row): Position = values.getValue(Position(column,row).toString())
-
+    override fun toString(): String {
+        return "${this.row.number}${this.column.symbol}"
     }
 }

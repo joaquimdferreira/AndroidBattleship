@@ -26,7 +26,7 @@ fun String.toShipType(): ShipType {
     else throw NoSuchElementException()
 }
 
-
+val totalShips = ShipType.values.fold(0) { acc, ship -> acc + ship.fleetQuantity }
 
 /**
  * All ship types allowed in the game.
@@ -35,9 +35,7 @@ fun String.toShipType(): ShipType {
  * @property fleetQuantity Number of ships of this type in the starting fleet.
  */
 class ShipType private constructor(val name: String, val squares:Int, val fleetQuantity:Int) {
-
     companion object {
-
         val values = listOf(
             ShipType("Carrier",5,1),
             ShipType("Battleship",4,1),

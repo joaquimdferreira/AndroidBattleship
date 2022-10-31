@@ -13,7 +13,7 @@ sealed class Board(
 ) {
     abstract fun play(player: Player, pos: Position): Board
 }
-
+/*
 class BoardStarting(moveList: List<Move> = listOf(), shipPosList: List<List<Position>> = listOf()): Board(moveList, shipPosList) {
     override fun play(player: Player, pos: Position): Board {
         throw IllegalStateException("This game hasn't started yet.")
@@ -64,4 +64,6 @@ class BoardRun(
         else throw IllegalStateException("Board is already at the beginning")
     }
 }
+
+ */
 

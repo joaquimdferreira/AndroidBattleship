@@ -1,12 +1,20 @@
 package isel.pt.androidbattleship.visual
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.material.Card
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -17,6 +25,7 @@ import androidx.core.graphics.toColor
 import isel.pt.androidbattleship.ui.theme.AndroidBattleshipTheme
 import isel.pt.androidbattleship.R
 import isel.pt.androidbattleship.domain.board.BOARD_SIZE
+import kotlin.random.Random
 
 @Composable
 fun GameRealizationScreen() {
@@ -37,35 +46,50 @@ fun GameRealizationScreen() {
     }
 }
 
-
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CreateGrid(text: String, color: Int) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(5.dp),
+            .padding(1.dp),
         contentAlignment = Alignment.Center
     ) {
-        Text(text = text, fontSize = 30.sp, fontFamily = FontFamily.Serif, fontWeight = FontWeight.Bold )
+        Text(
+            text = text,
+            fontSize = 25.sp,
+            fontFamily = FontFamily.Serif,
+            fontWeight = FontWeight.Bold
+        )
     }
 
     Box(
         modifier = Modifier
-            .padding(horizontal = 50.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .padding(horizontal = 10.dp),
         contentAlignment = Alignment.Center
     ) {
-        Surface(
+        val numbers = (0 until BOARD_SIZE * BOARD_SIZE).toList()
 
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(300.dp),
-            color = colorResource(id = color)
+        LazyVerticalGrid(
+            cells = GridCells.Fixed(BOARD_SIZE),
+            contentPadding = PaddingValues(8.dp)
         ) {
-
+            items(numbers.size) { item ->
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Box(
+                        modifier = Modifier
+                            .clip(RectangleShape)
+                            .background(if(item % 2 == 0) Color.Red else Color.Blue)
+                            .padding(18.dp)
+                    )
+                }
+            }
         }
     }
 }
+
+
 
 @Composable
 fun Square(isDarkSquare: Boolean) {
@@ -77,37 +101,51 @@ fun Square(isDarkSquare: Boolean) {
     }
 }
 
-
+/*
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Board() {
     Box(
         Modifier
             .fillMaxSize()
-            .aspectRatio(1f)) {
-        Column {
-            for (rank in 0 until BOARD_SIZE) {
-                Row(modifier = Modifier.weight(1f)) {
+            .aspectRatio(1f)
+    ) {
+        val numbers = (0 until BOARD_SIZE* BOARD_SIZE).toList()
 
-                    Square(
-                        rank%2 == 0/* other params */
-                    )
-
+        LazyVerticalGrid(
+            cells = GridCells.Fixed(BOARD_SIZE),
+            contentPadding = PaddingValues(14.dp)
+        ) {
+            items(numbers.size) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Card(
+                        modifier = Modifier
+                            .padding(18.dp),
+                        backgroundColor = colorResource(id = R.color.ocean_blue)
+                    ) {
+                        Surface(
+                            modifier = Modifier
+                            .fillMaxSize(),
+                            color = colorResource(id = R.color.ocean_blue)) {
+                        }
+                    }
                 }
-
             }
         }
     }
 }
-
+*/
 
 @Preview
 @Composable
 fun BoardPreview() {
     GameRealizationScreen()
 }
-
+/*
 @Preview
 @Composable
 fun GridPreview() {
     Board()
 }
+
+ */

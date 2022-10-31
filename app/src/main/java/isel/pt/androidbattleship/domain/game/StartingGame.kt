@@ -1,5 +1,5 @@
 package isel.pt.androidbattleship.domain.game
-
+/*
 import isel.pt.androidbattleship.domain.Game
 import isel.pt.androidbattleship.domain.GameState
 import isel.pt.androidbattleship.domain.board.Board
@@ -11,3 +11,4 @@ class StartingGame(player: Player, board: Board = Board(player)): Game {
         TODO()
     }
 }
+ */
